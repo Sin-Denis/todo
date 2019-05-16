@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Redirect, BrowserRouter, Switch } from 'react-router-dom';
 import './register.css';
 
 export default class Register extends Component {
@@ -7,6 +8,7 @@ export default class Register extends Component {
     username: '',
     email: '',
     password: '',
+    isRegister: false
   }
 
   onSubmit = (event) => {

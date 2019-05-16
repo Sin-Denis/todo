@@ -25,6 +25,12 @@ export default class Login extends Component {
     })
     .then((json) => {
       console.log(json);
+      this.setState(() => {
+        return {
+          username: '',
+          password: ''
+        }
+      });
     })
     .catch((err) => {
       console.log(err.message);
