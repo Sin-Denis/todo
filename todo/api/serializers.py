@@ -54,21 +54,18 @@ class TaskCreateSerializer(ModelSerializer):
         fields = (
             'name',
             'description',
-            'difficult',
-            'deadline'
+            'difficult'
         )
     
     def create(self, validated_data):
         name = validated_data['name']
         description = validated_data['description']
         difficult = validated_data['difficult']
-        deadline = validated_data['deadline']
 
         task_obj = Task(
             name=name,
             description=description,
-            difficult=difficult,
-            deadline=deadline
+            difficult=difficult
         )
 
         task_obj.save()

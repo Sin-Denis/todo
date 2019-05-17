@@ -35,7 +35,8 @@ export default class Register extends Component {
         return {
           username: '',
           email: '',
-          password: ''
+          password: '',
+          isRegister: true
         }
       });
     })
@@ -57,6 +58,9 @@ export default class Register extends Component {
   }
 
   render() {
+    if (this.state.isRegister) {
+      return <Redirect to="/login" />
+    }
     return (
       <form className="register" onSubmit={this.onSubmit}>
         <legend>Registration</legend>

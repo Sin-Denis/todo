@@ -5,14 +5,14 @@ from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.generics import (
     CreateAPIView,
     ListAPIView,
-    UpdateAPIView,
-    DestroyAPIView
+    # UpdateAPIView,
+    # DestroyAPIView
 )
 
-from rest_framework.status import (
-    HTTP_200_OK,
-    HTTP_400_BAD_REQUEST
-)
+# from rest_framework.status import (
+#     HTTP_200_OK,
+#     HTTP_400_BAD_REQUEST
+# )
 
 from rest_framework import (
     permissions,
@@ -30,7 +30,6 @@ from .models import (
     User,
     Task
 )
-
 
 class UserCreateAPIView(CreateAPIView):
     serializer_class = UserCreateSerializer
@@ -71,7 +70,7 @@ class TaskListAPIView(ListAPIView):
     def get(self, request, *args, **kwargs):
         user = User.objects.get(id=request.auth.user_id)
         tasks = user.tasks.all()
-        response = [TaskListSerializer(task) for task in tasks]
-        Response(response)
+        response = [TaskListSerializer(task).data for task in tasks]
+        return Response(response)
 
 

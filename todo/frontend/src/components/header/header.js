@@ -13,7 +13,7 @@ export default function header() {
       <div className="collapse navbar-collapse" id="navbarColor01">
         <ul className="navbar-nav mr-auto">
           <li className="nav-item" id="home">
-            <a className="nav-link" href="#">Home <span className="sr-only">(current)</span></a>
+            <Link className="nav-link" to="/dashboard">Dashboard</Link>
           </li>
           <li className="nav-item" id="Login">
             <Link className="nav-link" to="/login">Login</Link>
@@ -22,7 +22,7 @@ export default function header() {
             <Link className="nav-link" to="/register">Register</Link>
           </li>
           <li className="nav-item" id="Raiting">
-            <a className="nav-link" href="#">Raiting</a>
+            <Link className="nav-link" to="/raiting">Raiting</Link>
           </li>
         </ul>
         <form className="form-inline my-2 my-lg-0">

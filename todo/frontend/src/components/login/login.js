@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
+import { Redirect } from 'react-router-dom';
 import './login.css';
 
 export default class Login extends Component {
 
   state = {
     username: '',
-    password: ''
+    password: '',
+    isLogin: false
   }
 
   onSubmit = (event) => {
@@ -28,7 +30,8 @@ export default class Login extends Component {
       this.setState(() => {
         return {
           username: '',
-          password: ''
+          password: '',
+          isLogin: true
         }
       });
     })
@@ -46,6 +49,9 @@ export default class Login extends Component {
   }
 
   render() {
+    if (this.state.isLogin) {
+      return <Redirect to="/dashboard"/>
+    }
     return (
       <form className="login" onSubmit={this.onSubmit}>
         <legend>Login</legend>
