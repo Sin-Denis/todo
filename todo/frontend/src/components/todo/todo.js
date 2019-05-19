@@ -113,7 +113,13 @@ export default class Todo extends Component {
       <div className="todo">
         <h3 className="todo-title">Todo App</h3>
         <ul className="list-group todo-list">
-          {this.state.tasks.map(({ name, id }) => {return <TodoField key={ id } name={ name } num={ id } onDelete={ this.deleteTask }/>})}
+          {this.state.tasks.map(({ name, id }) => {return <TodoField
+            key={ id }
+            name={ name }
+            num={ id }
+            onDelete={ this.deleteTask }
+            />
+          })}
         </ul>
         <div className="todo-field">
           <label htmlFor="exampleInputTask"></label>

@@ -24,10 +24,17 @@ export default class Login extends Component {
       })
     })
     .then((res) => {
+      if (!res.ok) {
+        this.setState(() => {
+          return {
+            username: 'wrong username or password'
+          };
+        });
+        throw new Error('Bad request!');
+      }
       return res.json();
     })
     .then((json) => {
-      console.log(json);
       this.setState(() => {
         return {
           username: '',
@@ -38,7 +45,8 @@ export default class Login extends Component {
       });
     })
     .catch((err) => {
-      console.log(err.message);
+      console.log(2, err.message);
+
     });
   }
 
@@ -52,6 +60,7 @@ export default class Login extends Component {
 
   render() {
     if (this.state.isLogin) {
+      console.log(this.state.isLogin);
       return <Redirect to={`/dashboard/${ this.state.token }`}/>
     }
     return (
