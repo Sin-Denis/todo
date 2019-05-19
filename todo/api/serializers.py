@@ -79,6 +79,10 @@ class TaskListSerializer(ModelSerializer):
         fields = '__all__'
 
 
+class TaskDeleteSerializer(Serializer):
+    id = IntegerField()
+
+
 class TaskUpdateSerializer(ModelSerializer):
     users = UserListSerializer(many=True)
     id = IntegerField()

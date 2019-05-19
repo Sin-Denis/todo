@@ -5,8 +5,8 @@ from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.generics import (
     CreateAPIView,
     ListAPIView,
+    DestroyAPIView,
     # UpdateAPIView,
-    # DestroyAPIView
 )
 
 # from rest_framework.status import (
@@ -23,7 +23,8 @@ from .serializers import (
     UserCreateSerializer,
     UserListSerializer,
     TaskCreateSerializer,
-    TaskListSerializer
+    TaskListSerializer,
+    TaskDeleteSerializer
 )
 
 from .models import (
@@ -59,8 +60,41 @@ class UserAuthToken(ObtainAuthToken):
 
 
 class TaskCreateAPIView(CreateAPIView):
-    serializer_class = TaskCreateSerializer
-    queryset = Task.objects.all()
+    authentication_classes = (authentication.TokenAuthentication,)
+    permission_classes = (permissions.IsAuthenticated,)
+
+    def post(self, request, *args, **kwargs):
+        user = User.objects.get(id=request.auth.user_id)
+        serializer = TaskListSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        name = serializer.validated_data['name']
+        description = serializer.validated_data['description']
+        difficult = serializer.validated_data['difficult']
+
+        task_obj = Task(
+            name=name,
+            description=description,
+            difficult=difficult
+        )
+
+        task_obj.save()
+        user.tasks.add(task_obj)
+        user.save()
+        return Response(TaskListSerializer(task_obj).data)
+
+
+class TaskDeleteAPIView(DestroyAPIView):
+    authentication_classes = (authentication.TokenAuthentication,)
+    permission_classes = (permissions.IsAuthenticated,)
+
+    def delete(self, request, *args, **kwargs):
+        serializer = TaskDeleteSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        id = serializer.validated_data['id']
+        print(id)
+        task = Task.objects.get(id=id)
+        task.delete()
+        return Response('{"Delete": "Done"}')
 
 
 class TaskListAPIView(ListAPIView):
@@ -72,5 +106,3 @@ class TaskListAPIView(ListAPIView):
         tasks = user.tasks.all()
         response = [TaskListSerializer(task).data for task in tasks]
         return Response(response)
-
-

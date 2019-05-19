@@ -6,6 +6,7 @@ from .views import (
     UserListAPIView,
     TaskListAPIView,
     TaskCreateAPIView,
+    TaskDeleteAPIView
 )
 
 urlpatterns = [
@@ -13,5 +14,6 @@ urlpatterns = [
     path('login/', UserAuthToken.as_view()),
     path('user-list/', UserListAPIView.as_view()),
     path('task-create/', TaskCreateAPIView.as_view()),
+    path('task-delete/', TaskDeleteAPIView.as_view()),
     path('task-list/', TaskListAPIView.as_view())
 ]

@@ -21,11 +21,9 @@ export default class Todo extends Component {
       }
     })
     .then((res) => {
-      console.log(res);
       return res.json();
     })
     .then((body) => {
-      console.log(body);
       this.setState(() => {
         return {
           tasks: [ ...body ]
@@ -48,7 +46,7 @@ export default class Todo extends Component {
       },
       body: JSON.stringify({
         name: this.state.inputTask,
-        description: 'ывафв',
+        description: '',
         difficult: 2
       })
     })
@@ -57,16 +55,53 @@ export default class Todo extends Component {
     })
     .then((body) => {
       console.log(body);
+      this.setState(({ tasks, inputTask }) => {
+        return {
+          inputTask: '',
+          tasks: [...tasks, body]
+        };
+      });
     })
     .catch((err) => {
-      console.log(err.message);
+      console.log(2, err.message);
     });
 
   };
 
+  deleteTask = (id) => {
+    fetch('http://localhost:8000/api/task-delete/', {
+      method: 'DELETE',
+      headers: {
+        "Content-type": "application/json",
+        "Authorization": "Token d743d13ff5564628f48302fc1a79e6a3f529f18b"
+      },
+      body: JSON.stringify({
+        id: id
+      })
+    })
+    .then((res) => {
+      return res.json();
+    })
+    .then((body) => {
+      console.log(body);
+      this.setState(({ tasks }) => {
+        let idDel = tasks.findIndex((val) => {
+          return val.id === id;
+        });
+        const newTasks = [...tasks.slice(0, idDel), ...tasks.slice(idDel + 1)]
+        return {
+          tasks: newTasks
+        };
+      });
+    })
+    .catch((err) => {
+      console.log(err.message);
+    });
+  }
+
   onChangeTask = (event)  => {
     this.setState({ inputTask: event.target.value });
-    console.log(this.state)
+    console.log(this.state.inputTask);
   };
 
   componentWillMount() {
@@ -78,7 +113,7 @@ export default class Todo extends Component {
       <div className="todo">
         <h3 className="todo-title">Todo App</h3>
         <ul className="list-group todo-list">
-          {this.state.tasks.map(({ name }, id) => {return <TodoField key={ id } name={ name }/>})}
+          {this.state.tasks.map(({ name, id }) => {return <TodoField key={ id } name={ name } num={ id } onDelete={ this.deleteTask }/>})}
         </ul>
         <div className="todo-field">
           <label htmlFor="exampleInputTask"></label>
@@ -87,7 +122,8 @@ export default class Todo extends Component {
               className="form-control"
               id="todo-input"
               placeholder="Enter task"
-              onChange={this.onChangeTask}
+              value={ this.state.inputTask }
+              onChange={ this.onChangeTask }
           >
           </input>
           <button
