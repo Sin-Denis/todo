@@ -12,9 +12,9 @@ export default function header() {
 
       <div className="collapse navbar-collapse" id="navbarColor01">
         <ul className="navbar-nav mr-auto">
-          <li className="nav-item" id="home">
+          {/* <li className="nav-item" id="home">
             <Link className="nav-link" to="/dashboard">Dashboard</Link>
-          </li>
+          </li> */}
           <li className="nav-item" id="Login">
             <Link className="nav-link" to="/login">Login</Link>
           </li>

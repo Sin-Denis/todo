@@ -17,7 +17,7 @@ export default class Todo extends Component {
       method: 'GET',
       headers: {
         "Content-type": "application/json",
-        "Authorization": "Token d743d13ff5564628f48302fc1a79e6a3f529f18b"
+        "Authorization": `Token ${this.props.token}`
       }
     })
     .then((res) => {
@@ -42,7 +42,7 @@ export default class Todo extends Component {
       method: 'POST',
       headers: {
         "Content-type": "application/json",
-        "Authorization": "Token d743d13ff5564628f48302fc1a79e6a3f529f18b"
+        "Authorization": `Token ${this.props.token}`
       },
       body: JSON.stringify({
         name: this.state.inputTask,
@@ -73,7 +73,7 @@ export default class Todo extends Component {
       method: 'DELETE',
       headers: {
         "Content-type": "application/json",
-        "Authorization": "Token d743d13ff5564628f48302fc1a79e6a3f529f18b"
+        "Authorization": `Token ${this.props.token}`
       },
       body: JSON.stringify({
         id: id

@@ -16,7 +16,7 @@ export default class App extends Component {
       <div>
         <BrowserRouter>
           <Header />
-          <Route path="/dashboard" component={ Dashboard } />
+          <Route path="/dashboard/:token" component={ Dashboard } />
           <Route path="/register" component={ Register } />
           <Route path="/login" component={ Login } />
           <Route path="/raiting" component={ Raiting } />
