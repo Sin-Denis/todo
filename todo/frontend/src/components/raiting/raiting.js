@@ -10,7 +10,7 @@ export default class Raiting extends Component {
 
   getPeople = () => {
 
-    fetch('http://localhost:8000/api/user-list/', {
+    fetch('http://localhost:8000/api/user/', {
       method: 'GET',
       headers: {
         "Content-type": "application/json"

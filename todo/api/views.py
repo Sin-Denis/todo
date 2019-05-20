@@ -9,6 +9,8 @@ from rest_framework.generics import (
     # UpdateAPIView,
 )
 
+from rest_framework.views import APIView
+
 # from rest_framework.status import (
 #     HTTP_200_OK,
 #     HTTP_400_BAD_REQUEST
@@ -59,9 +61,16 @@ class UserAuthToken(ObtainAuthToken):
         })
 
 
-class TaskCreateAPIView(CreateAPIView):
+class TaskAPIView(APIView):
     authentication_classes = (authentication.TokenAuthentication,)
     permission_classes = (permissions.IsAuthenticated,)
+
+    def get(self, request, *args, **kwargs):
+        user = User.objects.get(id=request.auth.user_id)
+        tasks = user.tasks.all()
+        response = [TaskListSerializer(task).data for task in tasks]
+        return Response(response)
+
 
     def post(self, request, *args, **kwargs):
         user = User.objects.get(id=request.auth.user_id)
@@ -83,10 +92,6 @@ class TaskCreateAPIView(CreateAPIView):
         return Response(TaskListSerializer(task_obj).data)
 
 
-class TaskDeleteAPIView(DestroyAPIView):
-    authentication_classes = (authentication.TokenAuthentication,)
-    permission_classes = (permissions.IsAuthenticated,)
-
     def delete(self, request, *args, **kwargs):
         serializer = TaskDeleteSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
@@ -95,14 +100,3 @@ class TaskDeleteAPIView(DestroyAPIView):
         task = Task.objects.get(id=id)
         task.delete()
         return Response('{"Delete": "Done"}')
-
-
-class TaskListAPIView(ListAPIView):
-    authentication_classes = (authentication.TokenAuthentication,)
-    permission_classes = (permissions.IsAuthenticated,)
-
-    def get(self, request, *args, **kwargs):
-        user = User.objects.get(id=request.auth.user_id)
-        tasks = user.tasks.all()
-        response = [TaskListSerializer(task).data for task in tasks]
-        return Response(response)

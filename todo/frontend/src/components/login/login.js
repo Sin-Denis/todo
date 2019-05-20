@@ -37,7 +37,6 @@ export default class Login extends Component {
     .then((json) => {
       this.setState(() => {
         return {
-          username: '',
           password: '',
           token: json.token,
           isLogin: true
@@ -61,7 +60,7 @@ export default class Login extends Component {
   render() {
     if (this.state.isLogin) {
       console.log(this.state.isLogin);
-      return <Redirect to={`/dashboard/${ this.state.token }`}/>
+      return <Redirect to={`/dashboard/${ this.state.username }/${ this.state.token }`}/>
     }
     return (
       <form className="login" onSubmit={this.onSubmit}>

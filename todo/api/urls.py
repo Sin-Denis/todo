@@ -4,16 +4,12 @@ from .views import (
     UserCreateAPIView,
     UserAuthToken,
     UserListAPIView,
-    TaskListAPIView,
-    TaskCreateAPIView,
-    TaskDeleteAPIView
+    TaskAPIView
 )
 
 urlpatterns = [
     path('register/', UserCreateAPIView.as_view()),
     path('login/', UserAuthToken.as_view()),
-    path('user-list/', UserListAPIView.as_view()),
-    path('task-create/', TaskCreateAPIView.as_view()),
-    path('task-delete/', TaskDeleteAPIView.as_view()),
-    path('task-list/', TaskListAPIView.as_view())
+    path('user/', UserListAPIView.as_view()),
+    path('task/', TaskAPIView.as_view())
 ]

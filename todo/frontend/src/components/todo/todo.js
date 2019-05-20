@@ -13,7 +13,7 @@ export default class Todo extends Component {
 
   getTasks = () => {
 
-    fetch('http://localhost:8000/api/task-list/', {
+    fetch('http://localhost:8000/api/task/', {
       method: 'GET',
       headers: {
         "Content-type": "application/json",
@@ -38,7 +38,7 @@ export default class Todo extends Component {
 
   createTask = () => {
     
-    fetch('http://localhost:8000/api/task-create/', {
+    fetch('http://localhost:8000/api/task/', {
       method: 'POST',
       headers: {
         "Content-type": "application/json",
@@ -69,7 +69,7 @@ export default class Todo extends Component {
   };
 
   deleteTask = (id) => {
-    fetch('http://localhost:8000/api/task-delete/', {
+    fetch('http://localhost:8000/api/task/', {
       method: 'DELETE',
       headers: {
         "Content-type": "application/json",
